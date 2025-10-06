@@ -1,0 +1,122 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Video Player</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fce7d5;
+  }
+  h1 {
+    text-align: center;
+    font-family: 'Times New Roman', serif;
+    font-size: 36px;
+    margin: 15px;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 20px;
+  }
+  .thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .thumbnails img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #333;
+    border-radius: 8px;
+    transition: transform 0.3s;
+  }
+  .thumbnails img:hover {
+    transform: scale(1.05);
+    border-color: #f39c12;
+  }
+  .player {
+    background: black;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  video {
+    width: 800px;
+    height: 500px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+  .file-input {
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>MY VIDEO PLAYER</h1>
+<div class="container">
+  <!-- Left side thumbnails -->
+  <div class="thumbnails">
+    <img src="Picture/Thumbnails/thumb1.jpg" data-video="video/video1.mp4" alt="Video 1">
+    <img src="Picture/Thumbnails/thumb2.jpg" data-video="video/video2.mp4" alt="Video 2">
+    <img src="Picture/Thumbnails/thumb3.jpg" data-video="video/video3.mp4" alt="Video 3">
+    <img src="Picture/Thumbnails/thumb4.jpg" data-video="video/video4.mp4" alt="Video 4">
+    <img src="Picture/Thumbnails/thumb5.jpg" data-video="video/video5.mp4" alt="Video 5">
+  </div>
+
+  <!-- Right side video player -->
+  <div class="player">
+    <video id="mainVideo" controls autoplay>
+      <source src="video/video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Choose File button -->
+    <div class="file-input">
+      <label for="fileChooser"><b>Choose File:</b></label>
+      <input type="file" id="fileChooser" accept="video/*">
+    </div>
+  </div>
+</div>
+
+<script>
+  const thumbnails = document.querySelectorAll('.thumbnails img');
+  const videoPlayer = document.getElementById('mainVideo');
+  const videoSource = videoPlayer.querySelector('source');
+  const fileChooser = document.getElementById('fileChooser');
+
+  // Handle thumbnails
+  thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+      let videoFile = thumbnail.getAttribute('data-video');
+      videoSource.src = videoFile;
+      videoPlayer.load();
+      videoPlayer.play();
+    });
+  });
+
+  // Handle Choose File
+  fileChooser.addEventListener('change', () => {
+    const file = fileChooser.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      videoSource.src = fileURL;
+      videoPlayer.load();
+      videoPlayer.play();
+    }
+  });
+</script>
+
+</body>
+</html>
+```
